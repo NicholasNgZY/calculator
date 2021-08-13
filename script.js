@@ -6,24 +6,30 @@ class Calculator {
     this.clear();
   }
 
+  //   clear everything and display 0 at current operand
   clear() {
     this.previousOperand = '';
     this.currentOperand = '';
     this.operation = undefined;
   }
 
+  //   delete last input from current operand
   delete() {
     this.currentOperand = this.currentOperand.toString().slice(0, -1);
   }
 
-  appendnumber(number) {
+  //   add number or decimal to end of current operand
+  appendNumber(number) {
+    //check if decimal already exists within the current operand when input is decimal
     if (number === '.' && this.currentOperand.includes('.')) return;
     this.currentOperand = this.currentOperand.toString() + number.toString();
   }
 
+  //   choose operation to undergo
   chooseOperation(operation) {
-    if (this.currentOperand === '') return;
+    if (this.currentOperand === '') return; //check for value before operation
     if (this.previousOperand !== '') {
+      //compute and display at previous operand
       this.compute();
     }
     this.operation = operation;
@@ -31,11 +37,12 @@ class Calculator {
     this.currentOperand = '';
   }
 
+  //   calculation
   compute() {
     let computation;
     const previous = parseFloat(this.previousOperand);
     const current = parseFloat(this.currentOperand);
-    if (isNaN(previous) || isNaN(current)) return;
+    if (isNaN(previous) || isNaN(current)) return; //check if either operand is empty
     switch (this.operation) {
       case '+':
         computation = previous + current;
@@ -43,44 +50,42 @@ class Calculator {
       case '-':
         computation = previous - current;
         break;
-      case '*':
+      case '×':
         computation = previous * current;
         break;
-      case '/':
+      case '÷':
         computation = previous / current;
         break;
       default:
         return;
     }
-    this.readyToReset = true;
     this.currentOperand = computation;
     this.previousOperand = '';
     this.operation = undefined;
+    this.readyToReset = true;
   }
 
-  getDisplayNumber(number) {
+  getDisplay(number) {
     const stringNumber = number.toString();
     const integerDigits = parseFloat(stringNumber.split('.')[0]);
     const decimalDigits = stringNumber.split('.')[1];
     let integerDisplay;
-    if (isNaN(integerDigits)) {
-      integerDisplay = '';
-    } else {
-      integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 });
-    }
+    //check if is a number
+    if (isNaN(integerDigits)) integerDisplay = '0';
+    else integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 }); //format to comma after 3 integer and minimum 0 decimal
+    // check presence of decimals
     if (decimalDigits != null) {
-      return `${integerDisplay}.${decimalDigits}`;
-    } else {
-      return integerDisplay;
-    }
+      return `${integerDisplay}.${decimalDigits}`; //decimal
+    } else return integerDisplay; //no decimal
   }
+
   updateDisplay() {
-    this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand);
-    if (this.operation != null) {
-      this.previousOperandTextElement.innerText = `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;
-    } else {
-      this.previousOperandTextElement.innerText = '';
-    }
+    this.currentOperandTextElement.innerText = this.getDisplay(this.currentOperand);
+    //check if there is operation
+    if (this.operation != null)
+      //operation
+      this.previousOperandTextElement.innerText = `${this.getDisplay(this.previousOperand)} ${this.operation}`;
+    else this.previousOperandTextElement.innerText = ''; //no operation
   }
 }
 
@@ -98,9 +103,9 @@ numberButtons.forEach((button) => {
   button.addEventListener('click', () => {
     if (calculator.currentOperand !== '' && calculator.previousOperand === '' && calculator.readyToReset) {
       calculator.currentOperand = '';
-      calculator.readyToReset = false;
+      calculator.readyToReset = 'false';
     }
-    calculator.appendnumber(button.innerText);
+    calculator.appendNumber(button.innerText);
     calculator.updateDisplay();
   });
 });
