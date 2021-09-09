@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&family=VT323&display=swap" rel="stylesheet" />
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -14,8 +17,8 @@
         <div data-previous-operand class="previous-operand"></div>
         <div data-current-operand class="current-operand"></div>
       </div>
-      <button data-all-clear class="span-two">AC</button>
-      <button data-delete>DEL</button>
+      <button data-all-clear class="span-two red">AC</button>
+      <button data-delete class="red">DEL</button>
       <button data-operation>÷</button>
       <button data-number="">7</button>
       <button data-number>8</button>
@@ -33,5 +36,6 @@
       <button data-number>.</button>
       <button data-equals class="span-two">=</button>
     </div>
+    <footer><p>Coded by ZY Ng</p></footer>
   </body>
 </html>
