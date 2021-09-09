@@ -103,7 +103,7 @@ numberButtons.forEach((button) => {
   button.addEventListener('click', () => {
     if (calculator.currentOperand !== '' && calculator.previousOperand === '' && calculator.readyToReset) {
       calculator.currentOperand = '';
-      calculator.readyToReset = 'false';
+      calculator.readyToReset = false;
     }
     calculator.appendNumber(button.innerText);
     calculator.updateDisplay();
